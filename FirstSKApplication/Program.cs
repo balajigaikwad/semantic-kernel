@@ -2,7 +2,7 @@
 using Microsoft.SemanticKernel.Connectors.AzureOpenAI;
 using Microsoft.SemanticKernel.Connectors.OpenAI;
 
-var endpoint = "https://balaji-ai-demo.openai.azure.com/";
+var endpoint = Environment.GetEnvironmentVariable("AZURE_OPENAI_ENDPOINT") ?? string.Empty;
 var deploymentName = "gpt-4o-mini";
 var apiKey = Environment.GetEnvironmentVariable("AZURE_OPENAI_KEY") ?? string.Empty;
 
@@ -20,9 +20,18 @@ var kernel = builder.Build();
 var promptTemplate = "What is the capital of {{$country}}?";
 
 // Create a semantic function using the prompt template
-var getCapitalFUnction = kernel.CreateFunctionFromPrompt(promptTemplate, executionSettings : new AzureOpenAIPromptExecutionSettings { MaxTokens = 50}, "GetCapitalCity");
+var getCapitalFunction = kernel.CreateFunctionFromPrompt(promptTemplate, executionSettings:
+    new AzureOpenAIPromptExecutionSettings
+    {
+        MaxTokens = 50,
+        Temperature = 0.2
+    }, "GetCapitalCity");
 
-//Console.WriteLine(await kernel.InvokeAsync(getCapitalFUnction, new () { ["country"]  = "India"}));
-Console.WriteLine(await kernel.InvokeAsync(getCapitalFUnction, new () { ["country"]  = "Zimbabwa"}));
+var arguments = new KernelArguments
+{
+    ["country"] = "India"
+};
+
+Console.WriteLine(await kernel.InvokeAsync(getCapitalFunction, arguments));
 
 Console.WriteLine("Successful");
