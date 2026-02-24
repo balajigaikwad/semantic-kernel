@@ -1,5 +1,6 @@
 <Solution>
   <Project Path="FirstSKApplication/FirstSKApplication.csproj" />
+  <Project Path="SKMemory/SKMemory.csproj" Id="b15dfd36-b6c9-4485-9b8b-15a084c685f6" />
   <Project Path="SKPromptChat/SKPromptChat.csproj" Id="ac357b16-4875-404c-8ddb-85ed722aa268" />
   <Project Path="SKPromptPlugins/SKPromptPlugins.csproj" Id="6b6e52fd-6bc5-4a72-91ee-370920c7a29c" />
 </Solution>
